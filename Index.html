@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Giphy HW</title>
+</head>
+
+<body>
+
+<h1>Thy Giphy Beith What ith Be</h1>
+
+    <form id="gif-form">
+      <label for="gif-input">Add MORE Gifs!</label>
+      <input type="text" id="gif-input"> <input id="add-gif" type="submit" value="Add Gifs!">
+    </form>
+
+  <br>
+  
+  <div id="buttons">
+    
+    <button class="gifs" data-name="arnold schwarzenegger">
+      Arnie
+    </button>
+    
+    <button class="gifs" data-name="michael j fox">
+      Mr. Fox
+    </button>
+
+    <button class="gifs" data-name="dwayne johnson">
+      The Rock
+    </button>
+    
+    <button class="gifs" data-name="Kanye West">
+      Yeezy
+    </button>
+    
+    <button class="gifs" data-name="will smith">
+      Fresh Prince
+    </button>
+
+  </div>
+
+  <br>
+
+  <div id="gifs-appear-here">
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+
+
+  $("#buttons").on("click", ".gifs", buttonClick) 
+
+  function buttonClick(){
+    var topic = $(this).attr("data-name");    
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+        topic + "&api_key=dc6zaTOxFJmzC&limit=10";  
+
+      $.ajax({
+          url: queryURL,
+          method: "GET"
+        })
+        .then(function(response) {
+          var results = response.data;
+
+          for (var i = 0; i < results.length; i++) {
+            var gifDiv = $("<div class='item'>");
+
+            var rating = results[i].rating;
+
+            var p = $("<p>").text("Rating: " + rating);
+
+            var personImage = $("<img>");
+            personImage.attr("src", results[i].images.fixed_height_still.url);
+            personImage.attr("data-still", results[i].images.fixed_height_still.url);
+            personImage.attr("class", "status");
+            personImage.attr("data-animate", results[i].images.fixed_height.url);
+            personImage.attr("data-state", "still");
+            
+
+            gifDiv.prepend(p);
+            gifDiv.prepend(personImage);
+
+            $("#gifs-appear-here").prepend(gifDiv);
+          }
+          console.log(response);
+        });
+    };
+
+    // Function for displaying gifs data
+    $("#add-gif").on("click", function renderButtons() {
+
+      topic = $("#gif-input").val().trim();
+      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+        topic + "&api_key=dc6zaTOxFJmzC&limit=10";
+
+      $.ajax({
+          url: queryURL,
+          method: "GET"
+        })
+        .then(function(response) {
+          var results = response.data;
+
+          for (var i = 0; i < results.length; i++) {
+            var gifDiv = $("<div class='item'>");
+
+            var rating = results[i].rating;
+
+            var p = $("<p>").text("Rating: " + rating);
+
+            var personImage = $("<img>");
+            personImage.attr("src", results[i].images.fixed_height_still.url);
+            personImage.attr("data-still", results[i].images.fixed_height_still.url);
+            personImage.attr("class", "status");
+            personImage.attr("data-animate", results[i].images.fixed_height.url);
+            personImage.attr("data-state", "still");
+
+            gifDiv.prepend(p);
+            gifDiv.prepend(personImage);
+
+            $("#gifs-appear-here").prepend(gifDiv);
+          }
+        });
+        console.log(topic);
+
+
+      $("#gifs-appear-here").on("click", ".status", statusChange)
+
+        function statusChange() {
+        if ($(this).attr("data-state") === "still") {
+            $(this).attr("src", $(this).attr("data-animate"));
+            $(this).attr("data-state", "animate");
+          } else {
+            $(this).attr("src", $(this).attr("data-still"));
+            $(this).attr("data-state", "still");
+          };
+        };
+    
+        event.preventDefault();
+        // This line of code will grab the input from the textbox
+        var gif = $("#gif-input").val().trim();
+
+          var a = $("<button>");
+          // Adds a class of gif to our button
+          a.addClass("gifs");
+          // Added a data-attribute
+          a.attr("data-name", topic);
+          // Provided the initial button text
+          a.text($("#gif-input").val().trim());
+          // Added the button to the buttons-view div
+          $("#buttons").append(a);
+
+      });
+
+  </script>
+</body>
+
+</html>
