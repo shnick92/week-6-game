@@ -109,15 +109,15 @@
 
             var p = $("<p>").text("Rating: " + rating);
 
-            var personImage = $("<img>");
-            personImage.attr("src", results[i].images.fixed_height_still.url);
-            personImage.attr("data-still", results[i].images.fixed_height_still.url);
-            personImage.attr("class", "status");
-            personImage.attr("data-animate", results[i].images.fixed_height.url);
-            personImage.attr("data-state", "still");
+            var topicImage = $("<img>");
+            topicImage.attr("src", results[i].images.fixed_height_still.url);
+            topicImage.attr("data-still", results[i].images.fixed_height_still.url);
+            topicImage.attr("class", "status");
+            topicImage.attr("data-animate", results[i].images.fixed_height.url);
+            topicImage.attr("data-state", "still");
 
             gifDiv.prepend(p);
-            gifDiv.prepend(personImage);
+            gifDiv.prepend(topicImage);
 
             $("#gifs-appear-here").prepend(gifDiv);
           }
