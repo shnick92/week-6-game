@@ -123,19 +123,6 @@
           }
         });
         console.log(topic);
-
-
-      $("#gifs-appear-here").on("click", ".status", statusChange)
-
-        function statusChange() {
-        if ($(this).attr("data-state") === "still") {
-            $(this).attr("src", $(this).attr("data-animate"));
-            $(this).attr("data-state", "animate");
-          } else {
-            $(this).attr("src", $(this).attr("data-still"));
-            $(this).attr("data-state", "still");
-          };
-        };
     
         event.preventDefault();
         // This line of code will grab the input from the textbox
@@ -152,6 +139,19 @@
           $("#buttons").append(a);
 
       });
+
+    $("#gifs-appear-here").on("click", ".status", function statusChange() {
+      
+        if ($(this).attr("data-state") === "still") {
+            $(this).attr("src", $(this).attr("data-animate"));
+            $(this).attr("data-state", "animate");
+          } else {
+            $(this).attr("src", $(this).attr("data-still"));
+            $(this).attr("data-state", "still");
+          };
+    });
+
+    
 
   </script>
 </body>
